@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour {
 
         if (touchGroundLinecast) {
 
-            if (leftGround && currentJumpCount > 0) {
+            if (leftGround) {
 
                 currentJumpCount = 0;
                 verticalSpeed = 0;
@@ -102,7 +102,7 @@ public class PlayerController : MonoBehaviour {
         } else if (Input.GetKeyDown(KeyCode.E)) {
 
             speechBubble = SpeechBubble.GetFromPool(speechBubblePrefab);
-            speechBubble.Initialize(transform,new Vector3(0,1,0),new Vector2(1.3f,1f));
+            speechBubble.Initialize(transform,new Vector3(0.3f,0.3f,0),new Vector2(1.3f,1f));
             speechBubble.SetText("<sprite=0>?");
 
             hasSpeechBubble = true;

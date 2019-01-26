@@ -4,56 +4,42 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour {
 
-	public static Vector2 mousePosition;
-
-	public Transform target;
-	public float zDisplacement;
+	public Transform followTarget;
+	
+    public float zDisplacement;
 	public float lerpRate;
-	private Transform _transform;
 
-	private new Camera camera;
+    public Vector2 lowerBound;
+    public Vector2 upperBound;
 
-	public float halfwidth;
-	public float halfheight;
+    Vector2 position;
 
-	public Transform cursor;
+    // ---
 
-	[Header("Focus")]
-	public float playerToMouseFocus;
-	public float centerToTargetFocus;
+    new Transform transform;
+    new Camera camera;
 
-	public Vector3 deadFocus;
-	public MainGameManager manager;
+    void Start () {
+		
+        if (transform == null) transform = GetComponent<Transform>();
+        if (camera == null) camera = GetComponent<Camera>();
 
-	void Start () {
-		_transform = transform;
-		mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-		camera = GetComponent<Camera>();
-
-		halfwidth = camera.ViewportToWorldPoint(new Vector3(1,0,0)).x - _transform.position.x;
-		halfheight = camera.ViewportToWorldPoint(new Vector3(0,1,0)).y - _transform.position.y;
-
-		Cursor.visible = false;
+        position = transform.position;
+        // Cursor.visible = false;
 
 	}
 
 	void FixedUpdate () {
 
-		mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-		cursor.position = mousePosition;
+        float dt = Time.fixedDeltaTime;
 
-		if (manager.gameState == 0) {
+        Vector2 camSize = (Vector2)camera.ViewportToWorldPoint(new Vector3(1,1,0)) - position;
+        position = Vector2.Lerp(position,followTarget.position,lerpRate * dt);
 
-			_transform.position = Vector3.Lerp(_transform.position,deadFocus,Time.fixedDeltaTime * lerpRate);
+        position.x = Mathf.Clamp(position.x,lowerBound.x + camSize.x,upperBound.x - camSize.x);
+        position.y = Mathf.Clamp(position.y,lowerBound.y + camSize.y,upperBound.y - camSize.y);
 
-		} else {
-			
-			Vector3 targetPosition = Vector3.Lerp(target.position,mousePosition,playerToMouseFocus);
-
-			Vector3 idealPosition = new Vector3(targetPosition.x * centerToTargetFocus,targetPosition.y * centerToTargetFocus,zDisplacement);
-			_transform.position = Vector3.Lerp(_transform.position,idealPosition,Time.fixedDeltaTime * lerpRate);
-
-		}
+        transform.position = new Vector3(position.x,position.y,zDisplacement);
 
 	}
 
