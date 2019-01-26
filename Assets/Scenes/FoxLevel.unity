@@ -1769,7 +1769,7 @@ MonoBehaviour:
       bevelSize: 0
       spriteIndex: 0
       corner: 0
-    - position: {x: -10.689471, y: 0.8605156, z: 0}
+    - position: {x: -10.689471, y: 1.571324, z: 0}
       leftTangent: {x: 0, y: 0, z: 0}
       rightTangent: {x: 0, y: 0, z: 0}
       mode: 0
@@ -1778,7 +1778,7 @@ MonoBehaviour:
       bevelSize: 0
       spriteIndex: 0
       corner: 0
-    - position: {x: -5.3680954, y: 0.99617577, z: 0}
+    - position: {x: -5.8111906, y: 1.571324, z: 0}
       leftTangent: {x: 0, y: 0, z: 0}
       rightTangent: {x: 0, y: 0, z: 0}
       mode: 0
@@ -1787,7 +1787,7 @@ MonoBehaviour:
       bevelSize: 0
       spriteIndex: 0
       corner: 0
-    - position: {x: -1, y: 1.1523542, z: 0}
+    - position: {x: -1.1206694, y: 1.571324, z: 0}
       leftTangent: {x: 0, y: 0, z: 0}
       rightTangent: {x: 0, y: 0, z: 0}
       mode: 0
@@ -1873,8 +1873,8 @@ SpriteShapeRenderer:
   - {fileID: 21300000, guid: 1784796b18fff46c987eb8de9f40a5c4, type: 3}
   - {fileID: 21300000, guid: 439621b0b06ba454eb7cfc823c7e9a91, type: 3}
   m_LocalAABB:
-    m_Center: {x: -5.1682463, y: -8.162571, z: 0}
-    m_Extent: {x: 8.825967, y: 10.231148, z: 0}
+    m_Center: {x: -5.1686964, y: -8.161198, z: 0}
+    m_Extent: {x: 8.826417, y: 10.232521, z: 0}
 --- !u!60 &1494707895
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -1899,8 +1899,10 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -4.6674013, y: 1.4582338}
-      - {x: -11.082631, y: 1.2665706}
+    - - {x: -4.9292297, y: 1.96175}
+      - {x: -10.74024, y: 2.011776}
+      - {x: -10.708168, y: 1.5663209}
+      - {x: -11.098959, y: 1.6654463}
       - {x: -11.750836, y: -2.0223856}
       - {x: -14.005732, y: -13.361044}
       - {x: -9.485662, y: -12.988666}
@@ -1912,7 +1914,7 @@ PolygonCollider2D:
       - {x: 3.0111322, y: -18.083324}
       - {x: 2.2742748, y: -2.2484517}
       - {x: 2.9832592, y: -1.562952}
-      - {x: 3.2682724, y: 1.7980881}
+      - {x: 3.3286982, y: 1.9390726}
 --- !u!1001 &1665824146
 Prefab:
   m_ObjectHideFlags: 0
