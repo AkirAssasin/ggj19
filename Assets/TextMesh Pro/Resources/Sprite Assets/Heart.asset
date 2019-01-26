@@ -21,9 +21,9 @@ MonoBehaviour:
     y: 0
     width: 640
     height: 640
-    xOffset: 0
-    yOffset: 590
-    xAdvance: 680
+    xOffset: 30
+    yOffset: 640
+    xAdvance: 690
     scale: 0.9
     name: heart_0
     hashCode: 1938461445
