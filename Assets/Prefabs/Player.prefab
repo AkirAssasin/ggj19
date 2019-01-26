@@ -158,11 +158,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11fe3f8b5534243b68be1d8005b4301c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  horizontalSpeed: 4
+  horizontalSpeed: 6
   maxJumpCount: 1
-  jumpInitialSpeed: 9
-  jumpDeceleration: 18
-  terminalVelocity: 18
+  jumpInitialSpeed: 18
+  jumpDeceleration: 50
+  terminalVelocity: 50
   leftGround: 0
   speechBubblePrefab: {fileID: 1474021103969550, guid: 9c6a88c160da94fcf8303ff31b2a1cb7,
     type: 2}

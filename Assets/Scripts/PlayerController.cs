@@ -116,7 +116,10 @@ public class PlayerController : MonoBehaviour {
         } else {
 
             leftGround = true;
-            if (currentJumpCount <= 0) currentJumpCount = 1;
+            if (currentJumpCount <= 0) {
+                currentJumpCount = 1;
+                currentCycle = 0;
+            }
 
         }
 
