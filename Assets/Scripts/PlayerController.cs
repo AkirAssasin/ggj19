@@ -30,15 +30,50 @@ public class PlayerController : MonoBehaviour {
     new Transform transform;
     new Rigidbody2D rigidbody;
 
-	// Use this for initialization
-	void Start () {
+    Transform spriteTransform;
+    SpriteRenderer spriteRenderer;
+
+    Transform heartTransform;
+    SpriteRenderer heartRenderer;
+    Material heartMaterial;
+
+    [Header("Animation")]
+
+    public Sprite[] walkCycle;
+    public Sprite[] jumpCycle;
+
+    public float durationPerFrame;
+
+    float frameProgress;
+    int currentCycle;
+
+    // Use this for initialization
+    void Start () {
 		
         if (transform == null) transform = GetComponent<Transform>();
         if (rigidbody == null) rigidbody = GetComponent<Rigidbody2D>();
 
+        if (spriteTransform == null) spriteTransform = transform.GetChild(0);
+        if (spriteRenderer == null) spriteRenderer = spriteTransform.GetComponent<SpriteRenderer>();
+
+        if (heartTransform == null) heartTransform = spriteTransform.GetChild(0);
+        if (heartRenderer == null) heartRenderer = heartTransform.GetComponent<SpriteRenderer>();
+        if (heartMaterial == null) heartMaterial = heartRenderer.material;
+
+        // ---
+
         currentJumpCount = 1;
         hasSpeechBubble = false;
 
+        spriteRenderer.sprite = walkCycle[0];
+
+        // ---
+
+        float[] layerHeight = { 0.1f, 0.2f, 1f };
+        heartMaterial.SetFloatArray("_LayerHeight",layerHeight);
+
+        Vector4[] colors = { new Vector4(0.9f,0.7f,0.5f,1f),new Vector4(0.5f,0.9f,0.7f,1f), new Vector4(0,0,0,0) };
+        heartMaterial.SetVectorArray("_Colors",colors);
 
     }
 	
@@ -46,6 +81,9 @@ public class PlayerController : MonoBehaviour {
 	void Update () {
 
         float dt = Time.deltaTime;
+
+        float[] layerHeight = { Mathf.PerlinNoise(Time.time,0), Mathf.PerlinNoise(0,Time.time), 1f };
+        heartMaterial.SetFloatArray("_LayerHeight",layerHeight);
 
         Vector2 bottomLeft = transform.position + new Vector3(-transform.localScale.x/2,-transform.localScale.y / 2);
         Vector2 bottomRight = transform.position + new Vector3(transform.localScale.x / 2,-transform.localScale.y / 2);
@@ -58,6 +96,10 @@ public class PlayerController : MonoBehaviour {
 
                 currentJumpCount = 0;
                 verticalSpeed = 0;
+
+                spriteRenderer.sprite = walkCycle[currentCycle];
+                currentCycle = 0;
+                frameProgress = 0;
             }
 
             leftGround = false;
@@ -73,6 +115,7 @@ public class PlayerController : MonoBehaviour {
 
             currentJumpCount++;
             verticalSpeed = jumpInitialSpeed;
+            currentCycle = 0;
 
         }
 
@@ -84,6 +127,41 @@ public class PlayerController : MonoBehaviour {
         }
 
         float hsp = Input.GetAxisRaw("Horizontal") * horizontalSpeed;
+
+        if (currentJumpCount <= 0) {
+
+            if (Mathf.Abs(hsp) > 0) {
+
+                spriteRenderer.flipX = hsp < 0;
+                frameProgress += dt;
+
+                if (frameProgress >= durationPerFrame) {
+                    currentCycle = (currentCycle + 1) % walkCycle.Length;
+                    spriteRenderer.sprite = walkCycle[currentCycle];
+                    frameProgress = 0;
+                }
+
+            } else {
+
+                spriteRenderer.sprite = walkCycle[currentCycle];
+                currentCycle = 0;
+                frameProgress = 0;
+
+            }
+
+        } else if (currentCycle < jumpCycle.Length - 1) {
+
+            if (Mathf.Abs(hsp) > 0) spriteRenderer.flipX = hsp < 0;
+
+            frameProgress += dt;
+
+            if (frameProgress >= durationPerFrame) {
+                currentCycle++;
+                spriteRenderer.sprite = jumpCycle[currentCycle];
+                frameProgress = 0;
+            }
+
+        }
 
         rigidbody.velocity = new Vector2(hsp,verticalSpeed);
 
