@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour {
 
     int currentJumpCount;
     float verticalSpeed;
-    bool leftGround;
+    public bool leftGround;
 
     [Header("Speech")]
 
@@ -50,6 +50,9 @@ public class PlayerController : MonoBehaviour {
     float frameProgress;
     int currentCycle;
 
+	public AudioClip sfxClip;
+	public AudioSource source;
+
     // Use this for initialization
     void Start () {
 		
@@ -78,6 +81,8 @@ public class PlayerController : MonoBehaviour {
 
         Vector4[] colors = { new Vector4(0.9f,0.7f,0.5f,1f),new Vector4(0.5f,0.9f,0.7f,1f), new Vector4(0,0,0,0) };
         heartMaterial.SetVectorArray("_Colors",colors);
+
+		source = GetComponent<AudioSource>();
 
     }
 	
@@ -121,7 +126,7 @@ public class PlayerController : MonoBehaviour {
             currentJumpCount++;
             verticalSpeed = jumpInitialSpeed;
             currentCycle = 0;
-
+			SoundManagerScript.Instance.PlaySFX(AudioClipID.SFX_Jumping);
         }
 
         if (currentJumpCount > 0 && verticalSpeed > -terminalVelocity) {
@@ -133,12 +138,14 @@ public class PlayerController : MonoBehaviour {
 
         float hsp = Input.GetAxisRaw("Horizontal") * horizontalSpeed;
 
-        if (currentJumpCount <= 0) {
+        if (currentJumpCount <= 0) 
+		{
 
-            if (Mathf.Abs(hsp) > 0) {
+            if (Mathf.Abs(hsp) > 0) 
+			{
 
-                if (spriteRenderer.flipX != hsp < 0) {
-
+                if (spriteRenderer.flipX != hsp < 0) 
+				{
                     spriteRenderer.flipX = hsp < 0;
                     UpdateSpriteAnimationFrame(walkCycle,walkCycleHeartPosition);
 
@@ -146,11 +153,14 @@ public class PlayerController : MonoBehaviour {
 
                 frameProgress += dt;
 
-                if (frameProgress >= durationPerFrame) {
+                if (frameProgress >= durationPerFrame) 
+				{
                     currentCycle = (currentCycle + 1) % walkCycle.Length; 
                     UpdateSpriteAnimationFrame(walkCycle,walkCycleHeartPosition);
                     frameProgress = 0;
                 }
+
+
 
             } else {
 
@@ -209,6 +219,8 @@ public class PlayerController : MonoBehaviour {
 
         }
 
+		PlayWalkingSound();
+
     }
 
     void UpdateSpriteAnimationFrame (Sprite[] _frames, Vector3[] _heartPosition) {
@@ -217,5 +229,31 @@ public class PlayerController : MonoBehaviour {
         heartTransform.localPosition = new Vector3(_heartPosition[currentCycle].x * (spriteRenderer.flipX ? -1 : 1),_heartPosition[currentCycle].y);
 
     }
+
+	void PlayWalkingSound()
+	{
+		if(Input.GetKeyDown(KeyCode.D) && !leftGround)
+		{
+			SoundManagerScript.Instance.PlayLoopingSFX(AudioClipID.SFX_Walking);
+		}
+		else if(Input.GetKeyUp(KeyCode.D))
+		{
+			SoundManagerScript.Instance.StopLoopingSFX(AudioClipID.SFX_Walking);
+		}
+
+		if(Input.GetKeyDown(KeyCode.A) && !Input.GetKey(KeyCode.Space))
+		{
+			SoundManagerScript.Instance.PlayLoopingSFX(AudioClipID.SFX_Walking);
+		}
+		else if(Input.GetKeyUp(KeyCode.A))
+		{
+			SoundManagerScript.Instance.StopLoopingSFX(AudioClipID.SFX_Walking);
+		}
+		else if(leftGround)
+		{
+			SoundManagerScript.Instance.StopLoopingSFX(AudioClipID.SFX_Walking);
+		}
+
+	}
 
 }
