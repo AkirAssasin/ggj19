@@ -42,13 +42,45 @@ Shader "Sprites/Masked Character"
             }
         
         CGPROGRAM
-            #pragma vertex SpriteVert
+            #pragma vertex vert
             #pragma fragment SpriteFrag
             #pragma target 2.0
             #pragma multi_compile_instancing
             #pragma multi_compile _ PIXELSNAP_ON
             #pragma multi_compile _ ETC1_EXTERNAL_ALPHA
             #include "UnitySprites.cginc"
+
+            v2f vert ( appdata_t IN) {
+                
+                v2f OUT;
+
+                UNITY_SETUP_INSTANCE_ID (IN);
+                UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(OUT);
+                OUT.vertex = UnityFlipSprite(IN.vertex, _Flip);
+
+                // WOBBLE BEGIN
+
+                float4 worldPos = mul(IN.vertex, unity_ObjectToWorld);
+                float2 samplePos = worldPos.xz;
+                samplePos.x += _Time * 50;
+                OUT.vertex.x += sin(samplePos.x) * 0.02 * IN.texcoord.y;
+                OUT.vertex.y += cos(samplePos.x) * 0.02 * IN.texcoord.y;
+
+                // WOBBLE END
+
+                OUT.vertex = UnityObjectToClipPos(OUT.vertex);
+                OUT.texcoord = IN.texcoord;
+                OUT.color = IN.color * _Color * _RendererColor;
+
+                #ifdef PIXELSNAP_ON
+                OUT.vertex = UnityPixelSnap (OUT.vertex);
+                #endif
+
+                // OUT.vertex.x += cos(windSample) * 0.1;
+
+                return OUT;
+            }
+
         ENDCG
         }
     }

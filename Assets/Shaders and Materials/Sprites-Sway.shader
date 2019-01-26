@@ -6,6 +6,8 @@ Shader "Sprites/Sway"
     {
         [PerRendererData] _MainTex ("Sprite Texture", 2D) = "white" {}
         _Color ("Tint", Color) = (1,1,1,1)
+        _XIntensity ("X Intensity", Float) = 0.02
+        _YIntensity ("Y Intensity", Float) = 0.02
         [MaterialToggle] PixelSnap ("Pixel snap", Float) = 0
         [HideInInspector] _RendererColor ("RendererColor", Color) = (1,1,1,1)
         [HideInInspector] _Flip ("Flip", Vector) = (1,1,1,1)
@@ -42,6 +44,9 @@ Shader "Sprites/Sway"
             #pragma multi_compile _ ETC1_EXTERNAL_ALPHA
             #include "UnitySprites.cginc"
 
+            float _XIntensity;
+            float _YIntensity;
+
             v2f vert ( appdata_t IN) {
                 
                 v2f OUT;
@@ -55,8 +60,8 @@ Shader "Sprites/Sway"
                 float4 worldPos = mul(IN.vertex, unity_ObjectToWorld);
                 float2 samplePos = worldPos.xz;
                 samplePos.x += _Time * 50;
-                OUT.vertex.x += sin(samplePos.x) * 0.02 * IN.texcoord.y;
-                OUT.vertex.y += cos(samplePos.x) * 0.02 * IN.texcoord.y;
+                OUT.vertex.x += sin(samplePos.x) * _XIntensity * IN.texcoord.y;
+                OUT.vertex.y += cos(samplePos.x) * _YIntensity * IN.texcoord.y;
 
                 // WOBBLE END
 

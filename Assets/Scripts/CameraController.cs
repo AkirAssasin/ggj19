@@ -12,7 +12,7 @@ public class CameraController : MonoBehaviour {
     public Vector2 lowerBound;
     public Vector2 upperBound;
 
-    Vector2 position;
+    public Vector2 position;
 
     // ---
 
@@ -34,7 +34,11 @@ public class CameraController : MonoBehaviour {
         float dt = Time.fixedDeltaTime;
 
         Vector2 camSize = (Vector2)camera.ViewportToWorldPoint(new Vector3(1,1,0)) - position;
-        position = Vector2.Lerp(position,followTarget.position,lerpRate * dt);
+
+        Vector2 targetPosition = new Vector2(Mathf.Clamp(followTarget.position.x,lowerBound.x + camSize.x,upperBound.x - camSize.x),
+                                             Mathf.Clamp(followTarget.position.y,lowerBound.y + camSize.y,upperBound.y - camSize.y));
+
+        position = Vector2.Lerp(position,targetPosition,lerpRate * dt);
 
         position.x = Mathf.Clamp(position.x,lowerBound.x + camSize.x,upperBound.x - camSize.x);
         position.y = Mathf.Clamp(position.y,lowerBound.y + camSize.y,upperBound.y - camSize.y);

@@ -1,6 +1,6 @@
 // Unity built-in shader source. Copyright (c) 2016 Unity Technologies. MIT license (see license.txt)
 
-Shader "Sprites/Custom Mask"
+Shader "Sprites/Wave"
 {
     Properties
     {
@@ -28,23 +28,13 @@ Shader "Sprites/Custom Mask"
         Lighting Off
         ZWrite Off
         Blend One OneMinusSrcAlpha
-        colormask 0
 
         Pass
         {
         
-        Stencil
-             {
-                Ref 2
-                Comp Always
-                Pass Replace
-
-                WriteMask 2
-                
-            }
-        
         CGPROGRAM
-            #pragma vertex SpriteVert
+            
+            #pragma vertex vert
             #pragma fragment frag
             #pragma target 2.0
             #pragma multi_compile_instancing
@@ -52,15 +42,49 @@ Shader "Sprites/Custom Mask"
             #pragma multi_compile _ ETC1_EXTERNAL_ALPHA
             #include "UnitySprites.cginc"
 
-            fixed4 frag(v2f IN) : SV_Target
-            {
-                fixed4 c = tex2D(_MainTex, IN.texcoord) * IN.color;
+            v2f vert ( appdata_t IN) {
+                
+                v2f OUT;
+
+                UNITY_SETUP_INSTANCE_ID (IN);
+                UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(OUT);
+                OUT.vertex = UnityFlipSprite(IN.vertex, _Flip);
+
+                // WOBBLE BEGIN
+
+                float4 worldPos = mul(IN.vertex, unity_ObjectToWorld);
+                float2 samplePos = worldPos.xz;
+                samplePos.x += _Time * 50;
+                OUT.vertex.x += sin(samplePos.x) * 0.03;
+                OUT.vertex.y += cos(samplePos.x) * 0.03;
+
+                // WOBBLE END
+
+                OUT.vertex = UnityObjectToClipPos(OUT.vertex);
+                OUT.texcoord = IN.texcoord;
+                OUT.color = IN.color * _Color * _RendererColor;
+
+                #ifdef PIXELSNAP_ON
+                OUT.vertex = UnityPixelSnap (OUT.vertex);
+                #endif
+
+                // OUT.vertex.x += cos(windSample) * 0.1;
+
+                return OUT;
+            }
+
+            fixed4 frag (v2f IN) : SV_Target {
+            
+                IN.texcoord.x += _Time * 5;
+
+                fixed4 c = SampleSpriteTexture (IN.texcoord) * IN.color;
                 c.rgb *= c.a;
-                clip(c.a - 0.9);
                 return c;
             }
 
+        
         ENDCG
+        
         }
     }
 }

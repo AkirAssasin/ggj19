@@ -23,6 +23,8 @@ public class PlayerController : MonoBehaviour {
     public GameObject speechBubblePrefab;
     public float speechBubbleDuration;
 
+    public float animalTriggerDistance;
+
     bool hasSpeechBubble;
     float speechBubbleProgress;
     SpeechBubble speechBubble;
@@ -73,10 +75,10 @@ public class PlayerController : MonoBehaviour {
 
         // ---
 
-        float[] layerHeight = { 0.1f, 0.2f, 1f };
+        float[] layerHeight = { 1f };
         heartMaterial.SetFloatArray("_LayerHeight",layerHeight);
 
-        Vector4[] colors = { new Vector4(0.9f,0.7f,0.5f,1f),new Vector4(0.5f,0.9f,0.7f,1f), new Vector4(0,0,0,0) };
+        Vector4[] colors = { new Vector4(0,0,0,0) };
         heartMaterial.SetVectorArray("_Colors",colors);
 
     }
@@ -85,9 +87,6 @@ public class PlayerController : MonoBehaviour {
 	void Update () {
 
         float dt = Time.deltaTime;
-
-        float[] layerHeight = { Mathf.PerlinNoise(Time.time,0), Mathf.PerlinNoise(0,Time.time), 1f };
-        heartMaterial.SetFloatArray("_LayerHeight",layerHeight);
 
         Vector2 bottomLeft = transform.position + new Vector3(-transform.localScale.x/2,-transform.localScale.y / 2);
         Vector2 bottomRight = transform.position + new Vector3(transform.localScale.x / 2,-transform.localScale.y / 2);
@@ -162,7 +161,7 @@ public class PlayerController : MonoBehaviour {
 
         } else {
 
-            if (spriteRenderer.flipX != hsp < 0) {
+            if (Mathf.Abs(hsp) > 0 && spriteRenderer.flipX != hsp < 0) {
 
                 spriteRenderer.flipX = hsp < 0;
                 UpdateSpriteAnimationFrame(jumpCycle,jumpCycleHeartPosition);
@@ -205,6 +204,8 @@ public class PlayerController : MonoBehaviour {
 
             hasSpeechBubble = true;
             speechBubbleProgress = 0;
+
+            Animal.TriggerAnimalSpeech(transform.position,animalTriggerDistance);
 
 
         }

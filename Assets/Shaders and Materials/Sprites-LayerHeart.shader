@@ -47,8 +47,39 @@ Shader "Sprites/Layer Heart"
 
             #include "UnitySprites.cginc"
 
-            #pragma vertex SpriteVert
+            #pragma vertex vert
             #pragma fragment frag
+
+            v2f vert ( appdata_t IN) {
+                
+                v2f OUT;
+
+                UNITY_SETUP_INSTANCE_ID (IN);
+                UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(OUT);
+                OUT.vertex = UnityFlipSprite(IN.vertex, _Flip);
+
+                // WOBBLE BEGIN
+
+                float4 worldPos = mul(IN.vertex, unity_ObjectToWorld);
+                float2 samplePos = worldPos.xz;
+                samplePos.x += _Time * 50;
+                OUT.vertex.x += sin(samplePos.x) * 0.01;
+                OUT.vertex.y += cos(samplePos.x) * 0.01;
+
+                // WOBBLE END
+
+                OUT.vertex = UnityObjectToClipPos(OUT.vertex);
+                OUT.texcoord = IN.texcoord;
+                OUT.color = IN.color * _Color * _RendererColor;
+
+                #ifdef PIXELSNAP_ON
+                OUT.vertex = UnityPixelSnap (OUT.vertex);
+                #endif
+
+                // OUT.vertex.x += cos(windSample) * 0.1;
+
+                return OUT;
+            }
 
             float _LayerHeight[8];
             fixed4 _Colors[8];
