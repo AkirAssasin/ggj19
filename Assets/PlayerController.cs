@@ -5,17 +5,27 @@ using UnityEngine.U2D;
 
 public class PlayerController : MonoBehaviour {
 
+    [Header("Movement")]
+
     public float horizontalSpeed;
 
     public int maxJumpCount;
-    int currentJumpCount;
-
     public float jumpInitialSpeed;
     public float jumpDeceleration;
     public float terminalVelocity;
-    float verticalSpeed;
 
+    int currentJumpCount;
+    float verticalSpeed;
     bool leftGround;
+
+    [Header("Speech")]
+
+    public GameObject speechBubblePrefab;
+    public float speechBubbleDuration;
+
+    bool hasSpeechBubble;
+    float speechBubbleProgress;
+    SpeechBubble speechBubble;
 
     new Transform transform;
     new Rigidbody2D rigidbody;
@@ -27,8 +37,10 @@ public class PlayerController : MonoBehaviour {
         if (rigidbody == null) rigidbody = GetComponent<Rigidbody2D>();
 
         currentJumpCount = 1;
+        hasSpeechBubble = false;
 
-	}
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -74,6 +86,30 @@ public class PlayerController : MonoBehaviour {
         float hsp = Input.GetAxisRaw("Horizontal") * horizontalSpeed;
 
         rigidbody.velocity = new Vector2(hsp,verticalSpeed);
+
+        if (hasSpeechBubble) {
+
+            speechBubbleProgress += dt;
+
+            if (speechBubbleProgress >= speechBubbleDuration) {
+
+                hasSpeechBubble = false;
+                speechBubble.StartPoolingAnimation();
+                speechBubble = null;
+
+            }
+
+        } else if (Input.GetKeyDown(KeyCode.E)) {
+
+            speechBubble = SpeechBubble.GetFromPool(speechBubblePrefab);
+            speechBubble.Initialize(transform,new Vector3(0,1,0),new Vector2(1.3f,1f));
+            speechBubble.SetText("<sprite=0>?");
+
+            hasSpeechBubble = true;
+            speechBubbleProgress = 0;
+
+
+        }
 
     }
 
