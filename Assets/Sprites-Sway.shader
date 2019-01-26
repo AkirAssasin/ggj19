@@ -50,11 +50,15 @@ Shader "Sprites/Sway"
                 UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(OUT);
                 OUT.vertex = UnityFlipSprite(IN.vertex, _Flip);
 
+                // WOBBLE BEGIN
+
                 float4 worldPos = mul(IN.vertex, unity_ObjectToWorld);
                 float2 samplePos = worldPos.xz;
                 samplePos.x += _Time * 50;
                 OUT.vertex.x += sin(samplePos.x) * 0.02 * IN.texcoord.y;
                 OUT.vertex.y += cos(samplePos.x) * 0.02 * IN.texcoord.y;
+
+                // WOBBLE END
 
                 OUT.vertex = UnityObjectToClipPos(OUT.vertex);
                 OUT.texcoord = IN.texcoord;
