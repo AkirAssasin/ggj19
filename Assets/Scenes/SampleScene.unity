@@ -136,7 +136,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 46518318}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.15, y: -0.139, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 125139261}
@@ -253,7 +253,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -1
-  m_Sprite: {fileID: 21300000, guid: 682fbcb11a6b049aeb7ac2c8639caf7b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7fdbe24b120da4d1c8a7017f699c29bc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -566,10 +566,27 @@ MonoBehaviour:
   - {fileID: 21300000, guid: bc3741c0bc2d149aba9aaee794033c72, type: 3}
   - {fileID: 21300000, guid: 2b60d5432169e4441b85f0d021b4e4ee, type: 3}
   - {fileID: 21300000, guid: 2d0e7a1e1998d45bc85644fb02ab3594, type: 3}
+  walkCycleHeartPosition:
+  - {x: -0.14, y: -0.197, z: 0}
+  - {x: -0.189, y: -0.315, z: 0}
+  - {x: -0.14, y: -0.335, z: 0}
+  - {x: -0.14, y: -0.286, z: 0}
+  - {x: -0.179, y: -0.306, z: 0}
+  - {x: -0.228, y: -0.306, z: 0}
+  - {x: -0.15, y: -0.335, z: 0}
+  - {x: -0.111, y: -0.325, z: 0}
+  - {x: -0.15, y: -0.286, z: 0}
+  - {x: -0.15, y: -0.286, z: 0}
   jumpCycle:
   - {fileID: 21300000, guid: 6d4c80bd41c454aa5b3b9eeb199accc0, type: 3}
   - {fileID: 21300000, guid: 74a9c01d789c1413cb0a44368d6a6e33, type: 3}
   - {fileID: 21300000, guid: 90e1b3e1faa61411c86dbd27bebb8639, type: 3}
   - {fileID: 21300000, guid: f4a534e5a226d4feabb18a0f397f6cfb, type: 3}
   - {fileID: 21300000, guid: 7fdbe24b120da4d1c8a7017f699c29bc, type: 3}
+  jumpCycleHeartPosition:
+  - {x: -0.16, y: -0.335, z: 0}
+  - {x: -0.15, y: -0.296, z: 0}
+  - {x: -0.199, y: -0.286, z: 0}
+  - {x: -0.179, y: -0.227, z: 0}
+  - {x: -0.15, y: -0.139, z: 0}
   durationPerFrame: 0.05

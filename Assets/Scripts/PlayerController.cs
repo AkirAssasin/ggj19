@@ -40,7 +40,10 @@ public class PlayerController : MonoBehaviour {
     [Header("Animation")]
 
     public Sprite[] walkCycle;
+    public Vector3[] walkCycleHeartPosition;
+
     public Sprite[] jumpCycle;
+    public Vector3[] jumpCycleHeartPosition;
 
     public float durationPerFrame;
 
@@ -64,8 +67,9 @@ public class PlayerController : MonoBehaviour {
 
         currentJumpCount = 1;
         hasSpeechBubble = false;
+        currentCycle = 0;
 
-        spriteRenderer.sprite = walkCycle[0];
+        UpdateSpriteAnimationFrame(walkCycle,walkCycleHeartPosition);
 
         // ---
 
@@ -97,7 +101,8 @@ public class PlayerController : MonoBehaviour {
                 currentJumpCount = 0;
                 verticalSpeed = 0;
 
-                spriteRenderer.sprite = walkCycle[currentCycle];
+                UpdateSpriteAnimationFrame(walkCycle,walkCycleHeartPosition);
+
                 currentCycle = 0;
                 frameProgress = 0;
             }
@@ -132,33 +137,48 @@ public class PlayerController : MonoBehaviour {
 
             if (Mathf.Abs(hsp) > 0) {
 
-                spriteRenderer.flipX = hsp < 0;
+                if (spriteRenderer.flipX != hsp < 0) {
+
+                    spriteRenderer.flipX = hsp < 0;
+                    UpdateSpriteAnimationFrame(walkCycle,walkCycleHeartPosition);
+
+                }
+
                 frameProgress += dt;
 
                 if (frameProgress >= durationPerFrame) {
-                    currentCycle = (currentCycle + 1) % walkCycle.Length;
-                    spriteRenderer.sprite = walkCycle[currentCycle];
+                    currentCycle = (currentCycle + 1) % walkCycle.Length; 
+                    UpdateSpriteAnimationFrame(walkCycle,walkCycleHeartPosition);
                     frameProgress = 0;
                 }
 
             } else {
 
-                spriteRenderer.sprite = walkCycle[currentCycle];
+                UpdateSpriteAnimationFrame(walkCycle,walkCycleHeartPosition);
                 currentCycle = 0;
                 frameProgress = 0;
 
             }
 
-        } else if (currentCycle < jumpCycle.Length - 1) {
+        } else {
 
-            if (Mathf.Abs(hsp) > 0) spriteRenderer.flipX = hsp < 0;
+            if (spriteRenderer.flipX != hsp < 0) {
 
-            frameProgress += dt;
+                spriteRenderer.flipX = hsp < 0;
+                UpdateSpriteAnimationFrame(jumpCycle,jumpCycleHeartPosition);
 
-            if (frameProgress >= durationPerFrame) {
-                currentCycle++;
-                spriteRenderer.sprite = jumpCycle[currentCycle];
-                frameProgress = 0;
+            }
+
+            if (currentCycle < jumpCycle.Length - 1) {
+
+                frameProgress += dt;
+
+                if (frameProgress >= durationPerFrame) {
+                    currentCycle++;
+                    UpdateSpriteAnimationFrame(jumpCycle,jumpCycleHeartPosition);
+                    frameProgress = 0;
+                }
+
             }
 
         }
@@ -188,6 +208,13 @@ public class PlayerController : MonoBehaviour {
 
 
         }
+
+    }
+
+    void UpdateSpriteAnimationFrame (Sprite[] _frames, Vector3[] _heartPosition) {
+
+        spriteRenderer.sprite = _frames[currentCycle];
+        heartTransform.localPosition = new Vector3(_heartPosition[currentCycle].x * (spriteRenderer.flipX ? -1 : 1),_heartPosition[currentCycle].y);
 
     }
 
