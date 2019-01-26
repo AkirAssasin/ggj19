@@ -72,7 +72,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1474021103969550}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.124, y: -0, z: 0}
+  m_LocalPosition: {x: 0, y: -0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224167869622780202}
@@ -190,6 +190,7 @@ MonoBehaviour:
   inPool: 0
   spritePivotOffset: {x: -0.125, y: 0, z: 0}
   spriteSizeDiference: {x: 0.094, y: 0.198}
+  textMeshPosition: {x: 0.047, y: 0.151, z: 0}
   animationDuration: 0.4
   animationCurve:
     serializedVersion: 2

@@ -28,6 +28,8 @@ public class SpeechBubble : MonoBehaviour {
     public Vector3 spritePivotOffset;
     public Vector2 spriteSizeDiference; // sprite size = textMeshSize + sprite size difference
 
+    public Vector3 textMeshPosition;
+
     public float animationDuration;
     public AnimationCurve animationCurve;
 
@@ -44,7 +46,7 @@ public class SpeechBubble : MonoBehaviour {
     RectTransform textRect;
     new Transform transform;
 
-    public void Initialize (Transform _followTransform, Vector3 _anchorPosition, Vector2 _textMeshSize) {
+    public void Initialize (Transform _followTransform, Vector3 _anchorPosition, Vector2 _textMeshSize, bool _flip) {
 
         inPool = false;
 
@@ -61,12 +63,23 @@ public class SpeechBubble : MonoBehaviour {
         textMesh.enabled = true;
 
         followTransform = _followTransform;
+        SetTextMeshSize(_textMeshSize);
 
-        anchorPosition = _anchorPosition + spritePivotOffset;
+        spriteRenderer.flipX = _flip;
+
+        if (_flip) {
+
+            anchorPosition = _anchorPosition - spritePivotOffset;
+            textRect.localPosition = textMeshPosition - new Vector3(spriteRenderer.size.x,0,0);
+
+        } else {
+
+            anchorPosition = _anchorPosition + spritePivotOffset;
+            textRect.localPosition = textMeshPosition;
+
+        }
 
         transform.position = followTransform.position + anchorPosition;
-
-        SetTextMeshSize(_textMeshSize);
 
         StartInitialAnimation();
 

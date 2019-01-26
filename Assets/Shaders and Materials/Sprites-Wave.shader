@@ -56,7 +56,7 @@ Shader "Sprites/Wave"
                 float2 samplePos = worldPos.xz;
                 samplePos.x += _Time * 50;
                 OUT.vertex.x += sin(samplePos.x) * 0.03;
-                OUT.vertex.y += cos(samplePos.x) * 0.03;
+                OUT.vertex.y += cos(samplePos.x) * 0.1;
 
                 // WOBBLE END
 

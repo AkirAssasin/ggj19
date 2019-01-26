@@ -29,8 +29,8 @@ Material:
     m_Floats:
     - PixelSnap: 0
     - _EnableExternalAlpha: 0
-    - _XIntensity: 0.04
-    - _YIntensity: 0.04
+    - _XIntensity: 0.05
+    - _YIntensity: 0.05
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}

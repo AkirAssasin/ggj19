@@ -24,6 +24,7 @@ public class Animal : MonoBehaviour {
     public GameObject speechBubblePrefab;
     public Vector2 speechBubblePosition;
     public Vector2 speechBubbleSize;
+    public bool speechBubbleFlip;
 
     public string[] dialogue;
 
@@ -67,7 +68,7 @@ public class Animal : MonoBehaviour {
         } else {
 
             speechBubble = SpeechBubble.GetFromPool(speechBubblePrefab);
-            speechBubble.Initialize(transform,speechBubblePosition,speechBubbleSize);
+            speechBubble.Initialize(transform,speechBubblePosition,speechBubbleSize,speechBubbleFlip);
             speechBubble.SetText(dialogue[Random.Range(0,dialogue.Length)]);
 
             hasSpeechBubble = true;

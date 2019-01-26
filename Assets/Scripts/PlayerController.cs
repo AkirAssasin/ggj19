@@ -125,7 +125,7 @@ public class PlayerController : MonoBehaviour {
             currentJumpCount++;
             verticalSpeed = jumpInitialSpeed;
             currentCycle = 0;
-			SoundManagerScript.Instance.PlaySFX(AudioClipID.SFX_Jumping);
+			//SoundManagerScript.Instance.PlaySFX(AudioClipID.SFX_Jumping);
         }
 
         if (currentJumpCount > 0 && verticalSpeed > -terminalVelocity) {
@@ -209,7 +209,7 @@ public class PlayerController : MonoBehaviour {
         } else if (Input.GetKeyDown(KeyCode.E)) {
 
             speechBubble = SpeechBubble.GetFromPool(speechBubblePrefab);
-            speechBubble.Initialize(transform,new Vector3(-0.1f,1.1f,0),new Vector2(1.3f,1f));
+            speechBubble.Initialize(transform,new Vector3(-0.1f,1.1f,0),new Vector2(1.3f,1f),transform.position.x < 0);
             speechBubble.SetText("<sprite=0>?");
 
             hasSpeechBubble = true;
@@ -220,7 +220,7 @@ public class PlayerController : MonoBehaviour {
 
         }
 
-		PlayWalkingSound();
+		//PlayWalkingSound();
 
     }
 

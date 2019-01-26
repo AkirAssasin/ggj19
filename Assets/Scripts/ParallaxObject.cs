@@ -6,7 +6,9 @@ public class ParallaxObject : MonoBehaviour {
 
     [Header("Position")]
 
-    public Vector2 position;
+    public float maxY;
+
+    Vector2 position;
     public float distance;
 
     [Header("Display")]
@@ -17,6 +19,7 @@ public class ParallaxObject : MonoBehaviour {
     void Start () {
 
         if (transform == null) transform = GetComponent<Transform>();
+        position = transform.position;
         transform.position = Vector2.LerpUnclamped(position,target.position,distance);
 
     }
@@ -24,6 +27,7 @@ public class ParallaxObject : MonoBehaviour {
     void Update () {
 
         transform.position = Vector2.LerpUnclamped(position,target.position,distance);
+        if (transform.position.y > maxY) transform.position = new Vector3(transform.position.x,maxY,0);
 
     }
 
