@@ -11,7 +11,7 @@ public class UIScript : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-		
+		PlayBgm();
 	}
 	
 	// Update is called once per frame
@@ -40,5 +40,10 @@ public class UIScript : MonoBehaviour
 	public void ChangeScene(string name)
 	{
 		SceneManager.LoadScene(name);
+	}
+
+	void PlayBgm()
+	{
+		SoundManagerScript.Instance.PlayLoopingBGM(AudioClipID.BGM_MAIN_MENU);
 	}
 }
