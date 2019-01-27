@@ -97,6 +97,8 @@ public class WhaleStageProjectile : MonoBehaviour {
 
         }
 
+        if (WhaleStageController.completed) Pool();
+
         // spin if hazelnut
 
     }

@@ -16,6 +16,11 @@ public class LevelTeleporter : MonoBehaviour {
 
         hasTeleported = true;
         nextDestination = destinationInScene;
+
+        Particle.pool.Clear();
+        WhaleStageProjectile.pool.Clear();
+        SpeechBubble.pool.Clear();
+
         SceneManager.LoadScene(sceneID);
 
     }

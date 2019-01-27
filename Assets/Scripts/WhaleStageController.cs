@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class WhaleStageController : MonoBehaviour, IAnimal {
 
+    public static bool completed = true;
+
     [Header("Trigger Range")]
 
     public float triggerRange;
@@ -22,6 +24,7 @@ public class WhaleStageController : MonoBehaviour, IAnimal {
 
     public int dialogueProgress;
     public string[] dialogue;
+    public string[] completedDialogue;
     public bool hasDialogue;
 
     [Header("Whale")]
@@ -41,6 +44,7 @@ public class WhaleStageController : MonoBehaviour, IAnimal {
 
     public Transform pileTransform;
     Collider2D pileCollider;
+    Vector3 pileScale;
 
     public int nutsProgress;
 
@@ -120,8 +124,12 @@ public class WhaleStageController : MonoBehaviour, IAnimal {
         hasSpeechBubble = false;
         hasDialogue = true;
 
-        pileCollider.enabled = false;
-        pileTransform.localScale = Vector3.zero;
+        pileScale = pileTransform.localScale;
+
+        if (!completed) {
+            pileCollider.enabled = false;
+            pileTransform.localScale = Vector3.zero;
+        } else dialogue = completedDialogue;
 
         nutsProgress = 0;
 
@@ -135,11 +143,28 @@ public class WhaleStageController : MonoBehaviour, IAnimal {
 
     void Update () {
 
-        if (!hasDialogue && hasSpeechBubble) {
+        if (!hasDialogue && hasSpeechBubble && !completed) {
 
             speechBubble.SetText("Help me collect my hazelnuts!\n<color=#FFFF00>" + nutsProgress + "/15</color>");
 
             if (!isLaunchingProjectile) StartCoroutine(WhaleLaunchProjectiles());
+
+            if (nutsProgress >= 15) {
+
+                completed = true;
+                speechBubble.StartPoolingAnimation();
+                speechBubble = SpeechBubble.GetFromPool(speechBubblePrefab);
+                speechBubble.Initialize(transform,speechBubblePosition,speechBubbleSize,speechBubbleFlip);
+                speechBubble.SetText("!");
+
+                pileCollider.enabled = true;
+                pileTransform.localScale = pileScale;
+
+                hasDialogue = true;
+                dialogue = completedDialogue;
+                dialogueProgress = 0;
+
+            }
 
         }
 
