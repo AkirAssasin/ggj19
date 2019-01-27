@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WhaleStageController : MonoBehaviour, IAnimal {
 
-    public static bool completed = true;
+    public static bool completed = false;
 
     [Header("Trigger Range")]
 
