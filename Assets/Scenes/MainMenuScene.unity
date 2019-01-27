@@ -137,7 +137,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 35588048}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0eb77cae277ea5b44829be3903b36e14, type: 3}
+  m_Script: {fileID: 11500000, guid: d495679ccfe774f9d88b9418d0a3f0e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   bgmVolume: 1
@@ -381,7 +381,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 311209237}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed15f62805eda944aa7f484b55202ea8, type: 3}
+  m_Script: {fileID: 11500000, guid: f15e5504df8e54e2ebc988fed8ea1e67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   creditScreen: {fileID: 1930211154}
