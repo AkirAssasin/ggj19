@@ -8,6 +8,8 @@ TagManager:
   - SoundManager
   - Key
   - Level Border
+  - Button
+  - JailLock
   layers:
   - Default
   - TransparentFX
