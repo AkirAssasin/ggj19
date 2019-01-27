@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Whale Scene.unity
     guid: 79e683aaa1c254a1f868657fc44caa2c
+  - enabled: 1
+    path: Assets/Scenes/FoxLevel.unity
+    guid: 8a0e592056bd39148aad042ac4a04319
   m_configObjects: {}
