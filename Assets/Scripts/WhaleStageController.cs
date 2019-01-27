@@ -37,6 +37,11 @@ public class WhaleStageController : MonoBehaviour, IAnimal {
     public Vector2 spawnStartPoint;
     public Vector2 spawnEndPoint;
 
+    [Header("Pile Of Nuts")]
+
+    public Transform pileTransform;
+    Collider2D pileCollider;
+
     new Transform transform;
     new Rigidbody2D rigidbody;
 
@@ -106,11 +111,15 @@ public class WhaleStageController : MonoBehaviour, IAnimal {
 
         if (transform == null) transform = GetComponent<Transform>();
         if (rigidbody == null) rigidbody = GetComponent<Rigidbody2D>();
+        if (pileCollider == null) pileCollider = pileTransform.GetComponent<Collider2D>();
 
         // ---
 
         hasSpeechBubble = false;
         hasDialogue = true;
+
+        pileCollider.enabled = false;
+        pileTransform.localScale = Vector3.zero;
 
     }
 
