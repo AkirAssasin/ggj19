@@ -97,6 +97,11 @@ MonoBehaviour:
   velocityToBreak: 16
   layerOnCollision: 9
   layerOnInitiation: 8
+  particleSprites:
+  - {fileID: 21300000, guid: e8389e9ae975f454da53b18b28c0d99c, type: 3}
+  - {fileID: 21300000, guid: ebc535667f4364ff2afec7fffa0f4058, type: 3}
+  particlePrefab: {fileID: 1471713134273450, guid: eacf0aaec89044655a8c249b800aa7a8,
+    type: 2}
 --- !u!212 &212357232004751770
 SpriteRenderer:
   m_ObjectHideFlags: 1

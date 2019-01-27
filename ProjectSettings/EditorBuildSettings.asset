@@ -9,6 +9,12 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenuScene.unity
     guid: ad7dad7067ef441469833dd1cd3b12ed
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
+    path: Assets/Scenes/Deer Scene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/Deer To Whale Scene.unity
+    guid: 2a50f51dce3754fde913c05b8982432f
+  - enabled: 1
+    path: Assets/Scenes/Whale Scene.unity
+    guid: 79e683aaa1c254a1f868657fc44caa2c
   m_configObjects: {}

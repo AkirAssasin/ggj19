@@ -42,6 +42,8 @@ public class WhaleStageController : MonoBehaviour, IAnimal {
     public Transform pileTransform;
     Collider2D pileCollider;
 
+    public int nutsProgress;
+
     new Transform transform;
     new Rigidbody2D rigidbody;
 
@@ -121,6 +123,8 @@ public class WhaleStageController : MonoBehaviour, IAnimal {
         pileCollider.enabled = false;
         pileTransform.localScale = Vector3.zero;
 
+        nutsProgress = 0;
+
     }
 
     void OnDestroy () {
@@ -133,7 +137,7 @@ public class WhaleStageController : MonoBehaviour, IAnimal {
 
         if (!hasDialogue && hasSpeechBubble) {
 
-            speechBubble.SetText("Help me collect my hazelnuts!\n<color=#FFFF00>1/15</color>");
+            speechBubble.SetText("Help me collect my hazelnuts!\n<color=#FFFF00>" + nutsProgress + "/15</color>");
 
             if (!isLaunchingProjectile) StartCoroutine(WhaleLaunchProjectiles());
 
