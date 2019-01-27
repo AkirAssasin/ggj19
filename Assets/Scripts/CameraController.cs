@@ -24,6 +24,8 @@ public class CameraController : MonoBehaviour {
         if (transform == null) transform = GetComponent<Transform>();
         if (camera == null) camera = GetComponent<Camera>();
 
+        if (followTarget == null) followTarget = GameObject.FindGameObjectWithTag("Player").transform;
+
         position = transform.position;
         // Cursor.visible = false;
 

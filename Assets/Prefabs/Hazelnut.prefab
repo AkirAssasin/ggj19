@@ -94,7 +94,7 @@ MonoBehaviour:
   terminalVelocity: 16
   gravity: 16
   xLoss: 0.4
-  velocityToBreak: 16
+  velocityToBreak: 14
   layerOnCollision: 9
   layerOnInitiation: 8
   particleSprites:
