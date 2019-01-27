@@ -132,7 +132,7 @@ public class PlayerController : MonoBehaviour {
             currentJumpCount++;
             verticalSpeed = jumpInitialSpeed;
             currentCycle = 0;
-			//SoundManagerScript.Instance.PlaySFX(AudioClipID.SFX_Jumping);
+			SoundManagerScript.Instance.PlaySFX(AudioClipID.SFX_Jumping);
         }
 
         if (currentJumpCount > 0 && verticalSpeed > -terminalVelocity) {
@@ -230,7 +230,7 @@ public class PlayerController : MonoBehaviour {
 
         }
 
-		//PlayWalkingSound();
+		PlayWalkingSound();
 
     }
 

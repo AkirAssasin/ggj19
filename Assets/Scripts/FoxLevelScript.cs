@@ -9,6 +9,7 @@ public class FoxLevelScript : MonoBehaviour
 	public GameObject keyLock;
 	public Text buttonText;
 	public GameObject obstacle;
+	public GameObject jailCell;
 
 
 	 float buttonTime = 30.0f;
@@ -22,35 +23,20 @@ public class FoxLevelScript : MonoBehaviour
 	{
 		key = GameObject.FindGameObjectWithTag("Key");
 		keyLock = GameObject.Find("JailLock");
+		jailCell = GameObject.Find("JailCell");
 	}
 
 	// Use this for initialization
 	void Start () 
 	{
 		timeRemaining = buttonTime;
+		SoundManagerScript.Instance.PlayLoopingBGM(AudioClipID.BGM_FoxLevel);
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
-		if(triggered && Input.GetKeyDown(KeyCode.F))
-		{
-			startCountdown = true;
-		}
-
-		if(startCountdown)
-		{
-			timeRemaining -= 1.0f * Time.deltaTime;
-			obstacle.SetActive(false);
-
-			if(timeRemaining <= 0)
-			{
-				startCountdown = false;
-				timeRemaining = buttonTime;
-				obstacle.SetActive(true);
-			}
-				
-		}
+		CellKeyDoor();
 	}
 
 	void OnTriggerEnter2D(Collider2D other)
@@ -59,6 +45,7 @@ public class FoxLevelScript : MonoBehaviour
 		{
 			Destroy(key);
 			keyObtained = true;
+			SoundManagerScript.Instance.PlaySFX(AudioClipID.SFX_PickUp);
 
 		}
 
@@ -70,8 +57,10 @@ public class FoxLevelScript : MonoBehaviour
 
 		if(other.tag == "JailLock" && keyObtained)
 		{
+			SoundManagerScript.Instance.PlaySFX(AudioClipID.SFX_LockOpen);
 			keyLock.SetActive(false);
-			Debug.Log("Destroyed");
+			jailCell.GetComponent<BoxCollider2D>().enabled = false;
+
 		}
 			
 	}
@@ -82,6 +71,30 @@ public class FoxLevelScript : MonoBehaviour
 		{
 			triggered = false;
 			buttonText.GetComponent<Text>().enabled = false;
+
+		}
+	}
+
+	void CellKeyDoor()
+	{
+		if(triggered && Input.GetKeyDown(KeyCode.F))
+		{
+			startCountdown = true;
+			SoundManagerScript.Instance.PlaySFX(AudioClipID.SFX_LockOpen);
+		}
+
+		if(startCountdown)
+		{
+			timeRemaining -= 1.0f * Time.deltaTime;
+			obstacle.SetActive(false);
+
+			if(timeRemaining <= 0)
+			{
+				SoundManagerScript.Instance.PlaySFX(AudioClipID.SFX_LockOpen);
+				startCountdown = false;
+				timeRemaining = buttonTime;
+				obstacle.SetActive(true);
+			}
 
 		}
 	}
