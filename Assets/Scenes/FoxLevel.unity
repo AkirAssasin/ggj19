@@ -833,21 +833,7 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1480994434274150, guid: dae6b1cd42f52da48954b27e2e112750, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4968339509413902, guid: dae6b1cd42f52da48954b27e2e112750, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 212106565179247728, guid: dae6b1cd42f52da48954b27e2e112750,
-        type: 2}
-      propertyPath: m_FlipX
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 114830098234447412, guid: dae6b1cd42f52da48954b27e2e112750, type: 2}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dae6b1cd42f52da48954b27e2e112750, type: 2}
   m_IsPrefabAsset: 0
 --- !u!1 &586372692
@@ -3295,8 +3281,8 @@ SpriteShapeRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1718020575
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Color: {r: 0.43137255, g: 0.2784314, b: 0.6431373, a: 1}
   m_MaskInteraction: 0
