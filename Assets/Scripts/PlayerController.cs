@@ -201,7 +201,7 @@ public class PlayerController : MonoBehaviour {
 
             speechBubbleProgress += dt;
 
-            if (speechBubbleProgress >= speechBubbleDuration) {
+            if (speechBubbleProgress >= speechBubbleDuration || Input.GetKeyDown(KeyCode.E)) {
 
                 hasSpeechBubble = false;
                 speechBubble.StartPoolingAnimation();
@@ -211,15 +211,18 @@ public class PlayerController : MonoBehaviour {
 
         } else if (Input.GetKeyDown(KeyCode.E)) {
 
-            speechBubble = SpeechBubble.GetFromPool(speechBubblePrefab);
-            speechBubble.Initialize(transform,new Vector3(-0.1f,1.1f,0),new Vector2(1.3f,1f),transform.position.x < 0);
-            speechBubble.SetText("<sprite=0>?");
+            bool triggered = AnimalSpeech.TriggerAnimalSpeech(transform.position);
 
-            hasSpeechBubble = true;
-            speechBubbleProgress = 0;
+            if (!triggered) {
 
-            Animal.TriggerAnimalSpeech(transform.position,animalTriggerDistance);
+                speechBubble = SpeechBubble.GetFromPool(speechBubblePrefab);
+                speechBubble.Initialize(transform,new Vector3(-0.1f,1.1f,0),new Vector2(1.3f,1f),transform.position.x < 0);
+                speechBubble.SetText("<sprite=0>?");
 
+                hasSpeechBubble = true;
+                speechBubbleProgress = 0;
+
+            }
 
         }
 

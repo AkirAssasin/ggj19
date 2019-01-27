@@ -7,6 +7,7 @@ TagManager:
   - Source
   - SoundManager
   - Key
+  - Level Border
   layers:
   - Default
   - TransparentFX
@@ -16,8 +17,8 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
+  - Projectiles
+  - Projectiles SelfColliding
   - 
   - 
   - 
@@ -43,4 +44,19 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Parallax
+    uniqueID: 141196513
+    locked: 0
+  - name: Characters
+    uniqueID: 1799486963
+    locked: 0
+  - name: Water
+    uniqueID: 2747040307
+    locked: 0
+  - name: Terrain
+    uniqueID: 1718020575
+    locked: 0
+  - name: Speech Bubbles
+    uniqueID: 56340313
     locked: 0

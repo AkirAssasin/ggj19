@@ -3,80 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.U2D;
 
-public class Animal : MonoBehaviour {
+public static class AnimalSpeech {
 
-    public static List<Animal> actives = new List<Animal>();
+    public static List<IAnimal> actives = new List<IAnimal>();
 
-    public static void TriggerAnimalSpeech (Vector2 _origin, float _range) {
-
-        _range *= _range;
+    public static bool TriggerAnimalSpeech (Vector2 _origin) {
 
         for (int i = 0; i < actives.Count; i++) {
 
-            if ((actives[i].position - _origin).sqrMagnitude <= _range) actives[i].TriggerSpeech();
+            if (!actives[i].hasDialogue) continue;
+
+            if ((actives[i].position - _origin).sqrMagnitude <= actives[i].sqrRange) {
+                actives[i].OnTriggerDialogue();
+                return true;
+            }
 
         }
 
-    }
-
-    [Header("Speech")]
-
-    public GameObject speechBubblePrefab;
-    public Vector2 speechBubblePosition;
-    public Vector2 speechBubbleSize;
-    public bool speechBubbleFlip;
-
-    public string[] dialogue;
-
-    bool hasSpeechBubble;
-    SpeechBubble speechBubble;
-
-    public Vector2 position;
-
-    new Transform transform;
-    new Rigidbody2D rigidbody;
-
-    // Use this for initialization
-    void Start () {
-
-        actives.Add(this);
-
-        if (transform == null) transform = GetComponent<Transform>();
-        if (rigidbody == null) rigidbody = GetComponent<Rigidbody2D>();
-
-        // ---
-
-        hasSpeechBubble = false;
-        position = transform.position;
+        return false;
 
     }
 
-    void OnDestroy () {
+}
 
-        actives.Remove(this);
+public interface IAnimal {
 
-    }
+    Vector2 position { get; }
+    float sqrRange { get; }
+    bool hasDialogue { get; }
 
-    public void TriggerSpeech () {
-
-        if (hasSpeechBubble) {
-
-            hasSpeechBubble = false;
-            speechBubble.StartPoolingAnimation();
-            speechBubble = null;
-
-        } else {
-
-            speechBubble = SpeechBubble.GetFromPool(speechBubblePrefab);
-            speechBubble.Initialize(transform,speechBubblePosition,speechBubbleSize,speechBubbleFlip);
-            speechBubble.SetText(dialogue[Random.Range(0,dialogue.Length)]);
-
-            hasSpeechBubble = true;
-
-
-        }
-
-
-    }
+    void OnTriggerDialogue();
 
 }
