@@ -36,6 +36,11 @@ public class WhaleStageProjectile : MonoBehaviour {
 
     bool overrideRigidbody;
 
+    [Header("Particle")]
+
+    public Sprite[] particleSprites;
+    public GameObject particlePrefab;
+
     WhaleStageController stageController;
 
     new Transform transform;
@@ -86,6 +91,10 @@ public class WhaleStageProjectile : MonoBehaviour {
                 velocity.y -= gravity * dt;
             }
 
+        } else {
+
+            if (transform.position.y < -10) Pool();
+
         }
 
         // spin if hazelnut
@@ -103,24 +112,48 @@ public class WhaleStageProjectile : MonoBehaviour {
         inPool = true;
         pool.Add(this);
 
+        if (!overrideRigidbody) stageController.nutsProgress--;
+
     }
 
     void OnCollisionEnter2D (Collision2D collision) {
 
-        overrideRigidbody = false;
-        rigidbody.gravityScale = 1;
+        if (overrideRigidbody) {
 
-        gameObject.layer = layerOnCollision;
+            overrideRigidbody = false;
+            rigidbody.gravityScale = 1;
 
-        if (collision.gameObject.layer == layerOnInitiation) return;
+            gameObject.layer = layerOnCollision;
+
+            stageController.nutsProgress++;
+
+        }
 
         PlayerController pc = collision.gameObject.GetComponent<PlayerController>();
         if (pc != null) return;
 
         if (collision.gameObject.CompareTag("Level Border")) {
+
+            for (int i = 0; i < particleSprites.Length; i++) {
+
+                Particle p = Particle.GetFromPool(particlePrefab);
+                p.Initialize(transform.position,transform.localScale,particleSprites[i],Random.Range(0f,10f),Random.value * 2 * Mathf.PI);
+
+            }
+
             Pool();
+
         } else if (collision.relativeVelocity.magnitude > velocityToBreak) {
+
+            for (int i = 0; i < particleSprites.Length; i++) {
+
+                Particle p = Particle.GetFromPool(particlePrefab);
+                p.Initialize(transform.position,transform.localScale,particleSprites[i],Random.Range(0f,10f),Random.value * 2 * Mathf.PI);
+
+            }
+
             Pool();
+        
         }
 
     }

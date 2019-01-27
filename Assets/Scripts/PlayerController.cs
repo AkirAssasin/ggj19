@@ -70,6 +70,10 @@ public class PlayerController : MonoBehaviour {
 
         // ---
 
+        if (LevelTeleporter.hasTeleported) {
+            transform.position = LevelTeleporter.nextDestination;
+        }
+
         currentJumpCount = 1;
         hasSpeechBubble = false;
         currentCycle = 0;

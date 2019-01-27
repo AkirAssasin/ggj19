@@ -59,6 +59,9 @@ TagManager:
   - name: Terrain
     uniqueID: 1718020575
     locked: 0
+  - name: Particles
+    uniqueID: 982510447
+    locked: 0
   - name: Speech Bubbles
     uniqueID: 56340313
     locked: 0
